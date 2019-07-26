@@ -41,3 +41,7 @@ B – Buy – outgoing
 S – Sell – incoming
 Agreed Fx is the foreign exchange rate with respect to USD that was agreed
 Units: Number of shares to be bought or sold
+
+To compile: mvn clean install
+
+To run: cd ./target and java -cp ./fxtrade-1.0.jar com.vijay.fxtrade.FxStartTrading

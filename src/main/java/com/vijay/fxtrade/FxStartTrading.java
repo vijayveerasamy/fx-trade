@@ -4,45 +4,68 @@ import com.vijay.fxtrade.model.Currency;
 import com.vijay.fxtrade.model.Instruction;
 import com.vijay.fxtrade.model.InstructionType;
 import com.vijay.fxtrade.service.FxTransaction;
-import com.vijay.fxtrade.service.FxTransactionImpl;
+import com.vijay.fxtrade.service.impl.FxTransactionImpl;
 
 import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.temporal.TemporalAdjusters;
 
 public class FxStartTrading {
+
     public static void main(String[] args) {
+
         FxTransaction fxTransaction = new FxTransactionImpl();
 
         try {
-            //Singapore Ship Yard
-            fxTransaction.trade(new Instruction("SSY", InstructionType.BUY, Currency.AED,
-                    LocalDate.of(2019, 07, 17), LocalDate.of(2019, 07, 18),
-                    new BigDecimal(0.27), new BigDecimal(0.27), 500));
-            fxTransaction.trade(new Instruction("SSY", InstructionType.BUY, Currency.AED,
-                    LocalDate.of(2019, 07, 16), LocalDate.of(2019, 07, 19),
-                    new BigDecimal(0.27), new BigDecimal(0.27), 600));
-            fxTransaction.trade(new Instruction("SSY", InstructionType.BUY, Currency.AED,
-                    LocalDate.of(2019, 07, 15), LocalDate.of(2019, 07, 20),
-                    new BigDecimal(0.27), new BigDecimal(0.27), 400));
 
-            //Dubai Port Authority
+            fxTransaction.trade(new Instruction("SSY", InstructionType.BUY, Currency.AED,
+                    LocalDate.now().minusWeeks(1), LocalDate.now().minusWeeks(1).with(TemporalAdjusters.next(DayOfWeek.WEDNESDAY)),
+                  BigDecimal.valueOf(0.27), BigDecimal.valueOf(1.05), 500));
+            fxTransaction.trade(new Instruction("SSY", InstructionType.BUY, Currency.AED,
+                    LocalDate.now().minusWeeks(1), LocalDate.now().minusWeeks(1).with(TemporalAdjusters.next(DayOfWeek.FRIDAY)),
+                    BigDecimal.valueOf(0.27), BigDecimal.valueOf(1.06), 600));
+            fxTransaction.trade(new Instruction("SSY", InstructionType.BUY, Currency.AED,
+                    LocalDate.now().minusWeeks(1), LocalDate.now().minusWeeks(1).with(TemporalAdjusters.next(DayOfWeek.SATURDAY)),
+                    BigDecimal.valueOf(0.27), BigDecimal.valueOf(1.04), 400));
+
+
             fxTransaction.trade(new Instruction("DPA", InstructionType.BUY, Currency.SGD,
                     LocalDate.of(2019, 07, 19), LocalDate.of(2019, 07, 19),
-                    new BigDecimal(0.27), new BigDecimal(0.27), 700));
+                    BigDecimal.valueOf(0.73), BigDecimal.valueOf(1.03), 700));
             fxTransaction.trade(new Instruction("DPA", InstructionType.BUY, Currency.SGD,
                     LocalDate.of(2019, 07, 16), LocalDate.of(2019, 07, 21),
-                    new BigDecimal(0.27), new BigDecimal(0.27), 300));
+                    BigDecimal.valueOf(0.73), BigDecimal.valueOf(1.05), 300));
             fxTransaction.trade(new Instruction("DPA", InstructionType.BUY, Currency.SGD,
                     LocalDate.of(2019, 07, 15), LocalDate.of(2019, 07, 20),
-                    new BigDecimal(0.27), new BigDecimal(0.27), 500));
+                    BigDecimal.valueOf(0.73), BigDecimal.valueOf(1.07), 500));
+
+
+            fxTransaction.trade(new Instruction("SSY", InstructionType.SELL, Currency.AED,
+                    LocalDate.of(2019, 07, 17), LocalDate.of(2019, 07, 23),
+                    BigDecimal.valueOf(0.26), BigDecimal.valueOf(0.98), 150));
+            fxTransaction.trade(new Instruction("SSY", InstructionType.SELL, Currency.AED,
+                    LocalDate.of(2019, 07, 16), LocalDate.of(2019, 07, 24),
+                    BigDecimal.valueOf(0.26), BigDecimal.valueOf(0.99), 210));
+            fxTransaction.trade(new Instruction("SSY", InstructionType.SELL, Currency.AED,
+                    LocalDate.of(2019, 07, 15), LocalDate.of(2019, 07, 25),
+                    BigDecimal.valueOf(0.26), BigDecimal.valueOf(0.98), 240));
+
+
+            fxTransaction.trade(new Instruction("DPA", InstructionType.SELL, Currency.SGD,
+                    LocalDate.of(2019, 07, 19), LocalDate.of(2019, 07, 23),
+                    BigDecimal.valueOf(0.72), BigDecimal.valueOf(0.98), 350));
+            fxTransaction.trade(new Instruction("DPA", InstructionType.SELL, Currency.SGD,
+                    LocalDate.of(2019, 07, 16), LocalDate.of(2019, 07, 24),
+                    BigDecimal.valueOf(0.72), BigDecimal.valueOf(0.97), 200));
+            fxTransaction.trade(new Instruction("DPA", InstructionType.SELL, Currency.SGD,
+                    LocalDate.of(2019, 07, 15), LocalDate.of(2019, 07, 25),
+                    BigDecimal.valueOf(0.72), BigDecimal.valueOf(0.99), 100));
         }
-        catch(Exception e) {e.printStackTrace();}
+        catch(Exception e) {e.getMessage();}
 
-        List<Instruction> trades = fxTransaction.getTrades();
+        fxTransaction.printReportTrades(InstructionType.BUY);
 
-        System.out.println(trades.size());
-
+        fxTransaction.printReportTrades(InstructionType.SELL);
     }
 }
