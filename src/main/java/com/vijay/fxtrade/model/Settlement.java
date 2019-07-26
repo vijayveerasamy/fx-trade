@@ -16,7 +16,16 @@ public class Settlement {
     private BigDecimal amount;
 
     public Settlement(final String entity, final InstructionType instructionType, final Currency currency,
-                       final LocalDate settlementDate, final BigDecimal amount) {
+                       final LocalDate settlementDate) {
+
+        this.entity=entity;
+        this.instructionType=instructionType;
+        this.currency=currency;
+        this.settlementDate=settlementDate;
+    }
+
+    public Settlement(final String entity, final InstructionType instructionType, final Currency currency,
+                      final LocalDate settlementDate, final BigDecimal amount) {
 
         this.entity=entity;
         this.instructionType=instructionType;
@@ -47,14 +56,15 @@ public class Settlement {
 
     @Override
     public int hashCode() {
-        return this.entity.hashCode() * 31 + this.amount.hashCode()  * 41 * this.settlementDate.hashCode();
+        return this.entity.hashCode() * 31 * this.currency.hashCode() * 41
+                * this.settlementDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy")).hashCode();
     }
     @Override
     public boolean equals(Object obj) {
         if (obj == null || getClass() != obj.getClass())
             return false;
         Settlement that = (Settlement) obj;
-        return (this.entity.equals(that.entity) && this.amount.equals(that.amount)) &&
+        return (this.entity.equals(that.entity) && this.currency.equals(that.currency)) &&
                 this.settlementDate.getDayOfYear()==that.settlementDate.getDayOfYear() &&
                 this.settlementDate.getYear()==that.settlementDate.getYear();
     }

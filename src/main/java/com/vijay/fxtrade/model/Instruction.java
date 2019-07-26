@@ -94,6 +94,6 @@ public class Instruction {
 
     public Settlement getSettlement() {
         return new Settlement(this.entity, this.instructionType, this.currency,
-                this.settlementDate, this.amount);
+                this.settlementDate);
     }
 }
