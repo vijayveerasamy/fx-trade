@@ -1,7 +1,5 @@
 package com.vijay.fxtrade.model;
 
-import jdk.nashorn.internal.ir.annotations.Immutable;
-
 import java.util.HashMap;
 import java.util.Map;
 

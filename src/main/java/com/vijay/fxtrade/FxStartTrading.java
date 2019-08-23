@@ -31,17 +31,17 @@ public class FxStartTrading {
 
 
             fxTransaction.trade(new Instruction("DPA", InstructionType.BUY, Currency.SGD,
-                    LocalDate.of(2019, 07, 19), LocalDate.of(2019, 07, 19),
+                    LocalDate.now().minusWeeks(1), LocalDate.now().minusWeeks(1).with(TemporalAdjusters.next(DayOfWeek.WEDNESDAY)),
                     BigDecimal.valueOf(0.73), BigDecimal.valueOf(1.03), 700));
             fxTransaction.trade(new Instruction("DPA", InstructionType.BUY, Currency.SGD,
-                    LocalDate.of(2019, 07, 16), LocalDate.of(2019, 07, 21),
+                    LocalDate.now().minusWeeks(1), LocalDate.now().minusWeeks(1).with(TemporalAdjusters.next(DayOfWeek.THURSDAY)),
                     BigDecimal.valueOf(0.73), BigDecimal.valueOf(1.05), 300));
             fxTransaction.trade(new Instruction("DPA", InstructionType.BUY, Currency.SGD,
-                    LocalDate.of(2019, 07, 15), LocalDate.of(2019, 07, 20),
+                    LocalDate.now().minusWeeks(1), LocalDate.now().minusWeeks(1).with(TemporalAdjusters.next(DayOfWeek.SATURDAY)),
                     BigDecimal.valueOf(0.73), BigDecimal.valueOf(1.07), 500));
 
 
-            fxTransaction.trade(new Instruction("SSY", InstructionType.SELL, Currency.AED,
+            /*fxTransaction.trade(new Instruction("SSY", InstructionType.SELL, Currency.AED,
                     LocalDate.of(2019, 07, 17), LocalDate.of(2019, 07, 23),
                     BigDecimal.valueOf(0.26), BigDecimal.valueOf(0.98), 150));
             fxTransaction.trade(new Instruction("SSY", InstructionType.SELL, Currency.AED,
@@ -60,7 +60,7 @@ public class FxStartTrading {
                     BigDecimal.valueOf(0.72), BigDecimal.valueOf(0.97), 200));
             fxTransaction.trade(new Instruction("DPA", InstructionType.SELL, Currency.SGD,
                     LocalDate.of(2019, 07, 15), LocalDate.of(2019, 07, 25),
-                    BigDecimal.valueOf(0.72), BigDecimal.valueOf(0.99), 100));
+                    BigDecimal.valueOf(0.72), BigDecimal.valueOf(0.99), 100));*/
         }
         catch(Exception e) {e.getMessage();}
 

@@ -54,21 +54,6 @@ public class Settlement {
         return amount;
     }
 
-    @Override
-    public int hashCode() {
-        return this.entity.hashCode() * 31 * this.currency.hashCode() * 41
-                * this.settlementDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy")).hashCode();
-    }
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        Settlement that = (Settlement) obj;
-        return (this.entity.equals(that.entity) && this.currency.equals(that.currency)) &&
-                this.settlementDate.getDayOfYear()==that.settlementDate.getDayOfYear() &&
-                this.settlementDate.getYear()==that.settlementDate.getYear();
-    }
-
     public static Settlement withAmount(Entry<Settlement, BigDecimal> e) {
         return new Settlement(e.getKey().entity, e.getKey().instructionType, e.getKey().currency,
                 e.getKey().settlementDate, e.getValue());
